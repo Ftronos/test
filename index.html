@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="gameWrapper">
+    <div class="game-info">
+        <div>Счёт игрока: <b id="score">0</b></div>
+        <div>Мячи: <b id="hp"></b></div>
+        <div>Время: <b id="timer">0</b></div>
+    </div>
+    <canvas id="canvas" width="640" height="480"></canvas>
+</div>
+
+<script src="js/settings.js"></script>
+<script src="js/main.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/graph.js"></script>
+<script src="js/player.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/ball.js"></script>
+
+<script>
+    init();
+
+    /**
+     * Инициализирует условия для начала игры
+     */
+    function initGame() {
+        // Генерируем сетку ячеек
+        grid.generate(5, 60, 20, 'red');
+
+        player.init((width - player.width) / 2, height - 10, 100, 'blue');
+
+        // Инициализируем шарик, по x выравниваем по середине каретки, по y отнимаем величину радиуса,
+        // задаём радиус и цвет
+        ball.init(player.x + Math.ceil(player.width / 2), player.y - 5, 5, 'blue');
+
+        // Обнуляем счётчик времени
+        player.time = 0;
+
+        // Запрашиваем время игры и скорость мяча
+        settings.maxTime = +prompt('Введите максимальное время игры');
+        settings.ballSpeed = +prompt('Введите скорость мяча (1 - не почувствовал, 8 - BERSERK MODE ON)');
+
+        // Записываем скорость мяча
+        ball.setBallSpeed();
+    }
+
+    initGame();
+
+    // Определяем функцию игры
+    let game = function () {
+        // Заливаем игровую область
+        fillAll('#cccccc');
+
+        // Отрисовываем сетку ячеек
+        grid.draw();
+
+        // Передвигаем шарик
+        ball.move();
+        // Рисуем шарик
+        ball.draw();
+
+        // Передвигаем каретку
+        player.move();
+        // отрисовываем каретку
+        player.draw();
+
+        // Проверяем столкновение шарика с объектами
+        ball.collision();
+
+        if (!timerIsInit) {
+            initTimer();
+        }
+    };
+
+    let menu = function () {
+        // Делаем первоначальную заливку
+        fillAll('#cccccc');
+
+        // Отрисовываем сетку ячеек
+        grid.draw();
+        //Отрисовываем шарик
+        ball.draw();
+        // Отрисовываем каретку
+        player.draw();
+
+        // При нажатии любой клавиши запускаем игру
+        if (isAnyKeyDown()) {
+            setGame(game);
+        }
+    };
+
+    // Передаём функцию для запуска игры
+    startGame(menu);
+</script>
+
+</body>
+</html>
