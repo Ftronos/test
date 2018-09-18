@@ -21,11 +21,6 @@ let ball = {
     y: 0,
     radius: 5,
 
-    setBallSpeed(ballSpeed) {
-        this.speedX = ballSpeed;
-        this.speedY = ballSpeed;
-    },
-
     /**
      * Устанавливает параметры мяча в начальные значения
      */
@@ -64,9 +59,9 @@ let ball = {
      */
     move() {
         // Обновляем координату по x путём умножения скорости на направление
-        this.x += this.speedX * this.dx;
+        this.x += this.speed * this.dx;
         // Обновляем координату по y путём умножения скорости на направление
-        this.y += this.speedY * this.dy;
+        this.y += this.speed * this.dy;
     },
 
     /**

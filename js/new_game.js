@@ -55,7 +55,7 @@ const game = {
         this.ball.draw();
 
         // Создаём переменную которая будет запускать игру с периодом отрисовки в 1 секунду деленную на скорость мяча
-        //let gameTickId = this.setInterval(this.gameTick(), 1000 / this.ball.speed);
+        let gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
     },
 
     /**
@@ -63,22 +63,21 @@ const game = {
      */
     gameTick() {
         // Проверяем будет ли столкновение на следующем шаге
-        this.ball.collision();
-
+       // this.ball.collision();
         // Передвигаем мяч
-        this.ball.move();
+        ball.move();
 
         // Передвигаем каретку
-        this.player.move();
+        player.move(1);
 
         // Затираем всё поле
         fillAll('#cccccc');
 
         // Отрисовываем мяч
-        this.ball.draw();
+        ball.draw();
 
         // Отрисовываем игрока
-        this.player.draw();
+        player.draw();
     },
 
     /**
