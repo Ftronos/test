@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Gamedev Canvas Workshop</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="gameWrapper">
+    <div class="game-info">
+        <div>Счёт игрока: <b id="score">0</b></div>
+        <div>Мячи: <b id="hp"></b></div>
+        <div>Время: <b id="timer">0</b></div>
+    </div>
+    <canvas id="canvas"></canvas>
+</div>
+
+<script src="js/new_graph.js"></script>
+<script src="js/new_settings.js"></script>
+<script src="js/new_player.js"></script>
+<script src="js/new_grid.js"></script>
+<script src="js/new_ball.js"></script>
+<script src="js/new_condition.js"></script>
+<script src="js/new_game.js"></script>
+
+<script>
+    game.init();
+</script>
+
+</body>
+</html>
