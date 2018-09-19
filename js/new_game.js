@@ -9,6 +9,7 @@ const game = {
     hp: null,
     // Массив с историей событий
     eventHistory: [],
+    gameTickId: null,
     player,
     grid,
     ball,
@@ -59,7 +60,7 @@ const game = {
         // Запускаем игру
         if (this.startGame()) {
             // Создаём переменную которая будет запускать игру с периодом отрисовки в 1 секунду деленную на скорость мяча
-            let gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
+            this.gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
         }
     },
 
@@ -69,6 +70,8 @@ const game = {
     setEventHandlers() {
         // При нажатии кнопки, если статус игры "играем", то вызываем функцию смены направления у змейки.
         document.addEventListener('keydown', event => this.keyDownHandler(event));
+        // При нажатии кнопки стоп поставить игру на паузу
+        document.querySelector('#playButton').addEventListener('click', () => this.playClickHandler());
     },
 
     /**
@@ -86,6 +89,18 @@ const game = {
         // Если каретка может сделать передвижение, то передвигаем
         if (this.player.canMove()) {
             player.move(1);
+        }
+    },
+
+    /**
+     * Обработчик события нажатия на кнопку playButton.
+     */
+    playClickHandler() {
+        // Если сейчас статус игры "играем", то игру останавливаем, если игра остановлена, то запускаем.
+        if (this.condition.isPlaying()) {
+            this.stop();
+        } else if (this.condition.isStopped()) {
+            this.play();
         }
     },
 
@@ -259,5 +274,54 @@ const game = {
     updScore() {
         this.score += 1;
         document.querySelector('#score').innerHTML = this.score;
-    }
+    },
+
+    /**
+     * Обновляет жизни игрока
+     */
+    updHp() {
+        // Уменьшаем количество жизней на 1
+        this.hp -= 1;
+        // Отрисовываем новое оличество жизней
+        document.querySelector('#hp').innerHTML = this.hp;
+
+        // Если жизней не осталось
+        if (!this.hp) {
+            // Завершаем игру
+            this.finish();
+        }
+    },
+
+    /**
+     * Ставим статус игры в "играем".
+     */
+    play() {
+        // Ставим статус в 'playing'.
+        this.condition.setPlaying();
+        // Ставим интервал шагов змейки.
+        this.gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
+    },
+
+    /**
+     * Ставим статус игры в "стоп".
+     */
+    stop() {
+        // Ставим статус в 'stopped'.
+        this.condition.setStopped();
+        // Убираем интервал шагов змейки.
+        clearInterval(this.gameTickId);
+    },
+
+    /**
+     * Ставим статус игры в "финиш".
+     */
+    finish() {
+        // Ставим статус в 'finished'.
+        this.condition.setFinished();
+        // Убираем интервал шагов змейки.
+        clearInterval(this.gameTickId);
+        // Меняем название кнопки в меню на "Игра закончена" и делаем ее неактивной.
+        alert('Игра закончена!');
+        this.init();
+    },
 };

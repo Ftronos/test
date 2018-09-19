@@ -116,11 +116,22 @@ let ball = {
         if (this.y + this.radius >= height) {
             this.dx = 1;
             this.dy = -1;
+
+            // Обновляем количество жизней
+            game.updHp();
+
             // Запускам мяч снова с положения середины каретки
             ball.init(player.x + Math.ceil(player.width / 2), player.y - 5, 5, 'blue');
         }
     },
 
+    /**
+     * Определяет с какой из сторон ячейки было столкновение и меняет направление движения шарика
+     * @param coord1 Координата мяча
+     * @param coord2 Координа ячейки
+     * @param dir направление, которое будет изменено
+     * @param cell id ячейки с которой столкнулись
+     */
     collisionSetDirection(coord1, coord2, dir, cell) {
         if (coord1 === coord2) {
             if (dir === 'dx') {
