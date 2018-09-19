@@ -62,13 +62,6 @@ const game = {
 
         // Устанавливаем обработчики событий
         this.setEventHandlers();
-
-        // Запускаем игру
-        if (this.startGame()) {
-            this.timerTickId = setInterval(this.timerTick, 1000);
-            // Создаём переменную которая будет запускать игру с периодом отрисовки в 1 секунду деленную на скорость мяча
-            this.gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
-        }
     },
 
     /**
@@ -371,7 +364,7 @@ const game = {
         this.eventHistory.push(event);
     },
 
-    setResults() {
+    getResults() {
         let resultObj = {
             balls: this.hp,
             time: this.time,
@@ -381,4 +374,8 @@ const game = {
 
         return resultObj;
     },
+
+    getHistory() {
+        return this.eventHistory;
+    }
 };
