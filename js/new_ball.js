@@ -120,6 +120,9 @@ let ball = {
             // Обновляем количество жизней
             game.updHp();
 
+            // Делаем запись события что мяч потерян
+            game.pushEvent('ballLost');
+
             // Запускам мяч снова с положения середины каретки
             ball.init(player.x + Math.ceil(player.width / 2), player.y - 5, 5, 'blue');
         }
@@ -140,6 +143,9 @@ let ball = {
                 this.dy *= -1;
             }
             grid.destroy(cell);
+
+            // Делаем запись события что ячейка сбита
+            game.pushEvent('blockDestroyed');
 
             game.updScore();
         }

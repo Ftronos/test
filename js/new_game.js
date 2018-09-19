@@ -11,6 +11,7 @@ const game = {
     eventHistory: [],
     gameTickId: null,
     timerTickId: null,
+    eventHistory: [],
     player,
     grid,
     ball,
@@ -142,6 +143,10 @@ const game = {
      */
     timerTick() {
         game.time += 1;
+
+        if (game.time >= settings.maxTime) {
+            game.finish();
+        }
     },
 
     /**
@@ -195,7 +200,7 @@ const game = {
      */
     setParametrs() {
         // Устанавливаем максимальное время
-        this.setMaxTime(60);
+        this.setMaxTime(3);
 
         // Устанавливаем счёт для победы
         this.setMaxCount(10);
@@ -344,4 +349,14 @@ const game = {
         alert('Игра закончена!');
         this.init();
     },
+
+    /**
+     * Создаёт запись в журнале о событии
+     * @param name
+     */
+    pushEvent(name) {
+        let event = {name: name, time: this.time};
+
+        this.eventHistory.push(event);
+    }
 };
