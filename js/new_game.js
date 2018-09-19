@@ -4,12 +4,13 @@ const game = {
     // Счёт игры
     score: null,
     // Время игры
-    time: null,
+    time: 0,
     // Количество жизней
     hp: null,
     // Массив с историей событий
     eventHistory: [],
     gameTickId: null,
+    timerTickId: null,
     player,
     grid,
     ball,
@@ -59,6 +60,7 @@ const game = {
 
         // Запускаем игру
         if (this.startGame()) {
+            this.timerTickId = setInterval(this.timerTick, 1000);
             // Создаём переменную которая будет запускать игру с периодом отрисовки в 1 секунду деленную на скорость мяча
             this.gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
         }
@@ -136,6 +138,13 @@ const game = {
     },
 
     /**
+     * Увеличивает текущее время игры на 1
+     */
+    timerTick() {
+        game.time += 1;
+    },
+
+    /**
      * Основная функция, отвечающая за 1 тик игры, где происходит передвижение элементов, проверка на их столкновение
      * и отрисовка
      */
@@ -144,6 +153,9 @@ const game = {
         ball.collision();
         // Передвигаем мяч
         ball.move();
+
+        // Выводим время
+        game.drawTime(game.time);
 
         // Передвигаем каретку
         player.move(0);
@@ -159,6 +171,13 @@ const game = {
 
         // Отрисовываем игрока
         player.draw();
+    },
+
+    /**
+     * Отрисовывает время
+     */
+    drawTime() {
+        document.querySelector('#timer').innerHTML = this.time;
     },
 
     /**
@@ -282,7 +301,7 @@ const game = {
     updHp() {
         // Уменьшаем количество жизней на 1
         this.hp -= 1;
-        // Отрисовываем новое оличество жизней
+        // Отрисовываем новое количество жизней
         document.querySelector('#hp').innerHTML = this.hp;
 
         // Если жизней не осталось
@@ -298,7 +317,7 @@ const game = {
     play() {
         // Ставим статус в 'playing'.
         this.condition.setPlaying();
-        // Ставим интервал шагов змейки.
+        this.timerTickId = setInterval(this.timerTick, 1000);
         this.gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
     },
 
@@ -308,7 +327,7 @@ const game = {
     stop() {
         // Ставим статус в 'stopped'.
         this.condition.setStopped();
-        // Убираем интервал шагов змейки.
+        clearInterval(this.timerTickId);
         clearInterval(this.gameTickId);
     },
 
@@ -319,6 +338,7 @@ const game = {
         // Ставим статус в 'finished'.
         this.condition.setFinished();
         // Убираем интервал шагов змейки.
+        clearInterval(this.timerTickId);
         clearInterval(this.gameTickId);
         // Меняем название кнопки в меню на "Игра закончена" и делаем ее неактивной.
         alert('Игра закончена!');
