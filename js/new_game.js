@@ -128,13 +128,13 @@ const game = {
      * Запускает игру
      */
     startGame() {
-        while(true) {
-            let confirmation = +prompt('Введите 1 для начала игры');
-
-            if (confirmation === 1) {
-                return true;
-            }
-        }
+        // while(true) {
+        //     let confirmation = +prompt('Введите 1 для начала игры');
+        //
+        //     if (confirmation === 1) {
+        //         return true;
+        //     }
+        // }
     },
 
     /**
@@ -187,7 +187,7 @@ const game = {
     },
 
     /**
-     * Проверяет выиграли ли мы по сьитым ячейкам
+     * Проверяет выиграли ли мы по сбитым ячейкам
      */
     checkCells() {
       if (grid.nodes.length === 0 || grid.nodes.length === this.cellsCount - settings.maxCount) {
@@ -359,17 +359,6 @@ const game = {
 
         // Создаём запись об окончании игры
         this.pushEvent('gameOver');
-
-        let resultObj = {
-            balls: this.hp,
-            time: this.time,
-            points: this.score,
-            fullTime: this.settings.maxTime,
-        };
-
-        console.log(resultObj);
-
-        return resultObj;
     },
 
     /**
@@ -380,5 +369,16 @@ const game = {
         let event = {name: name, time: this.time};
 
         this.eventHistory.push(event);
-    }
+    },
+
+    setResults() {
+        let resultObj = {
+            balls: this.hp,
+            time: this.time,
+            points: this.score,
+            fullTime: this.settings.maxTime,
+        };
+
+        return resultObj;
+    },
 };
