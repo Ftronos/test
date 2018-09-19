@@ -66,30 +66,30 @@ let ball = {
                 enemy.x, enemy.y, enemy.width, enemy.height)) {
                 if (this.dx === 1 && this.dy === -1) {
                     // Движение вправо вверх
-                    this.collisionSetDirection(this.x + this.radius, enemy.x + 1, 'dx', i);
+                    this.collisionSetDirection(Math.ceil(this.x) + this.radius, enemy.x + 1, 'dx', i);
 
-                    this.collisionSetDirection(this.y - this.radius, enemy.y + enemy.height - 1, 'dy', i);
+                    this.collisionSetDirection(Math.ceil(this.y) - this.radius, enemy.y + enemy.height - 1, 'dy', i);
                 }
 
                 if (this.dx === 1 && this.dy === 1) {
                     // Движение вправо вниз
-                    this.collisionSetDirection(this.x + this.radius, enemy.x + 1, 'dx', i);
+                    this.collisionSetDirection(Math.ceil(this.x) + this.radius, enemy.x + 1, 'dx', i);
 
-                    this.collisionSetDirection(this.y + this.radius, enemy.y + 1, 'dy', i);
+                    this.collisionSetDirection(Math.ceil(this.y) + this.radius, enemy.y + 1, 'dy', i);
                 }
 
                 if (this.dx === -1 && this.dy === -1) {
                     // Движение влево вверх
-                    this.collisionSetDirection(this.x - this.radius, enemy.x + enemy.width - 1, 'dx', i);
+                    this.collisionSetDirection(Math.ceil(this.x) - this.radius, enemy.x + enemy.width - 1, 'dx', i);
 
-                    this.collisionSetDirection(this.y - this.radius, enemy.y + enemy.height - 1, 'dy', i);
+                    this.collisionSetDirection(Math.ceil(this.y) - this.radius, enemy.y + enemy.height - 1, 'dy', i);
                 }
 
                 if (this.dx === -1 && this.dy === 1) {
                     // Движение влево вниз
-                    this.collisionSetDirection(this.x - this.radius, enemy.x + enemy.width - 1, 'dx', i);
+                    this.collisionSetDirection(Math.ceil(this.x) - this.radius, enemy.x + enemy.width - 1, 'dx', i);
 
-                    this.collisionSetDirection(this.y + this.radius, enemy.y + 1, 'dy', i);
+                    this.collisionSetDirection(Math.ceil(this.y) + this.radius, enemy.y + 1, 'dy', i);
                 }
             }
         }
