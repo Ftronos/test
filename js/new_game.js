@@ -9,6 +9,8 @@ const game = {
     hp: null,
     // Массив с историей событий
     eventHistory: [],
+    // Всего ячеек на начало игры
+    cellsCount: null,
     gameTickId: null,
     timerTickId: null,
     player,
@@ -45,6 +47,9 @@ const game = {
 
         // Генерируем сетку ячеек
         this.grid.generate(5, 5, 20, 'red');
+
+        // Записываем общее количество ячеек
+        this.cellsCount = this.grid.nodes.length;
 
         // Рисуем сетку ячеек
         this.grid.draw();
@@ -150,10 +155,13 @@ const game = {
      * и отрисовка
      */
     gameTick() {
-        // Проверяем будет ли столкновение на следующем шаге
-        ball.collision();
         // Передвигаем мяч
         ball.move();
+
+        // Проверяем столкновение
+        ball.collision();
+
+        game.checkCells();
 
         // Выводим время
         game.drawTime(game.time);
@@ -179,6 +187,15 @@ const game = {
     },
 
     /**
+     * Проверяет выиграли ли мы по сьитым ячейкам
+     */
+    checkCells() {
+      if (grid.nodes.length === 0 || grid.nodes.length === this.cellsCount - settings.maxCount) {
+          game.finish();
+      }
+    },
+
+    /**
      * Задаёт дефолтные настройки
      */
     reset() {
@@ -196,7 +213,7 @@ const game = {
         this.setMaxTime(600);
 
         // Устанавливаем счёт для победы
-        this.setMaxCount(10);
+        this.setMaxCount(1000);
 
         // Устанавливаем количество строк
         this.setRows(5);
