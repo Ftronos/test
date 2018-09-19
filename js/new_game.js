@@ -11,7 +11,6 @@ const game = {
     eventHistory: [],
     gameTickId: null,
     timerTickId: null,
-    eventHistory: [],
     player,
     grid,
     ball,
@@ -28,11 +27,11 @@ const game = {
         // Устанавливаем игру в статус "Играем"
         this.condition.setPlaying();
 
-        // Устанавливаем полученные от пользователя параметры
-        this.setParametrs();
-
         // Рисуем начальные фигуры
         init();
+
+        // Устанавливаем полученные от пользователя параметры
+        this.setParametrs();
 
         // Делаем первоначальную заливку
         fillAll('#cccccc');
@@ -88,11 +87,6 @@ const game = {
         }
         // Получаем направление каретки, больше мы не обрабатываем других нажатий.
         this.player.dx = this.getDirectionByCode(event.code);
-
-        // Если каретка может сделать передвижение, то передвигаем
-        if (this.player.canMove()) {
-            player.move(1);
-        }
     },
 
     /**
@@ -145,6 +139,8 @@ const game = {
         game.time += 1;
 
         if (game.time >= settings.maxTime) {
+            // Создаём запись об окончании игры
+            game.pushEvent('timeIsOut');
             game.finish();
         }
     },
@@ -161,9 +157,6 @@ const game = {
 
         // Выводим время
         game.drawTime(game.time);
-
-        // Передвигаем каретку
-        player.move(0);
 
         // Затираем всё поле
         fillAll('#cccccc');
@@ -200,7 +193,7 @@ const game = {
      */
     setParametrs() {
         // Устанавливаем максимальное время
-        this.setMaxTime(3);
+        this.setMaxTime(600);
 
         // Устанавливаем счёт для победы
         this.setMaxCount(10);
@@ -212,10 +205,10 @@ const game = {
         this.setCols(5);
 
         // Устанавливаем количество жизней
-        this.setHp(3);
+        this.setHp(600);
 
         // Устанавливаем ширину каретки (% от общей ширины)
-        this.setPlayerWidth(10);
+        this.setPlayerWidth(20);
 
         // Устанавливаем процент сдвига
         this.setMoveDistance(1);
@@ -273,7 +266,7 @@ const game = {
      * @param w ширина каретки
      */
     setPlayerWidth(w) {
-        this.settings.width = w;
+        this.player.width = w * 0.01 * width;
     },
 
     /**
@@ -342,10 +335,14 @@ const game = {
     finish() {
         // Ставим статус в 'finished'.
         this.condition.setFinished();
-        // Убираем интервал шагов змейки.
+        // Отключаем отрисовку игры
         clearInterval(this.timerTickId);
+        // Отключаем таймер
         clearInterval(this.gameTickId);
-        // Меняем название кнопки в меню на "Игра закончена" и делаем ее неактивной.
+
+        // Создаём запись об окончании игры
+        this.pushEvent('gameOver');
+
         alert('Игра закончена!');
         this.init();
     },

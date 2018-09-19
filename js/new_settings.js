@@ -6,6 +6,5 @@ const settings = {
     rows: null,
     cols: null,
     hp: null,
-    playerWidth: null,
     moveDistance: null,
 }

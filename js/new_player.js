@@ -13,7 +13,7 @@
 const player = {
     x: 50,
     y: null,
-    width: 100,
+    width: null,
     height: 10,
     color: 'yellow',
     speed: 2,
@@ -29,38 +29,41 @@ const player = {
     /**
      * Проверяет возможно ли перемещение каретки
      */
-    canMove() {
+    canMove(direction, distance) {
         // Проверяем где окажется каретка в следующий момент времени
-        let nextPosition = this.x + this.dx;
+        let nextPosition = this.x + direction * distance;
         // Если она окажется вне игровой области то шаг не может быть сделан
         if (nextPosition + this.width > width || nextPosition < 0) {
-          return false;
+            return false;
         }
 
         return true;
     },
 
     /**
-     * Передвигает каретку
-     */
-    move(distance) {
-        this.x += this.dx * distance * 0.01 * width;
-    },
-
-    /**
-     * Передвигает каретку на заданное количество процентов влево
-     * @param distance количество процентов на которое надо передвинуть каретку
+     * Передвигает каретку влево
      */
     moveLeft(distance) {
-        this.x -= distance * 0.01 * width;
+        // Если каретка может сделать передвижение, то передвигаем
+        if (this.canMove(-1, distance)) {
+            this.x += distance * 0.01 * width * -1;
+            return;
+        }
+
+        this.x = 0;
     },
 
     /**
-     * Передвигает каретку на заданное количество процентов вправо
-     * @param distance количество процентов на которое надо передвинуть каретку
+     * Передвигает каретку вправо
      */
     moveRight(distance) {
-        this.x += distance* 0.01 * width;
+        // Если каретка может сделать передвижение, то передвигаем
+        if (this.canMove(1, distance)) {
+            this.x += distance * 0.01 * width * 1;
+            return;
+        }
+
+        this.x = width - this.width;
     },
 
     /**
