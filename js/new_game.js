@@ -360,8 +360,16 @@ const game = {
         // Создаём запись об окончании игры
         this.pushEvent('gameOver');
 
-        alert('Игра закончена!');
-        this.init();
+        let resultObj = {
+            balls: this.hp,
+            time: this.time,
+            points: this.score,
+            fullTime: this.settings.maxTime,
+        };
+
+        console.log(resultObj);
+
+        return resultObj;
     },
 
     /**

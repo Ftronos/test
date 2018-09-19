@@ -31,7 +31,7 @@ const player = {
      */
     canMove(direction, distance) {
         // Проверяем где окажется каретка в следующий момент времени
-        let nextPosition = this.x + direction * distance;
+        let nextPosition = this.x + direction * distance * 0.01 * width;
         // Если она окажется вне игровой области то шаг не может быть сделан
         if (nextPosition + this.width > width || nextPosition < 0) {
             return false;
@@ -71,7 +71,12 @@ const player = {
      * @param distance количество процентов на которое надо передвинуть каретку
      */
     moveLeap(distance) {
-        this.x = distance * 0.01 * width;
+        let nextPosition = distance * 0.01 * width;
+        if (nextPosition + this.width > width) {
+            this.x = width - this.width;
+            return;
+        }
+        this.x = nextPosition;
     },
 
     /**
