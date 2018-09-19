@@ -182,7 +182,7 @@ const game = {
         this.setMoveDistance(1);
 
         // Устанавливаем скорость мяча
-        this.setSpeed(1);
+        this.setSpeed(2);
 
         // Устанавливаем начальные значения в элементы счёта и жизней
         document.querySelector('#score').innerHTML = this.score;
@@ -251,5 +251,13 @@ const game = {
      */
     setSpeed(speed) {
         this.ball.speed = speed;
+    },
+
+    /**
+     * Обновляет счёт игры
+     */
+    updScore() {
+        this.score += 1;
+        document.querySelector('#score').innerHTML = this.score;
     }
 };

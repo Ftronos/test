@@ -57,165 +57,42 @@ let ball = {
      */
     collision() {
         // Проходимся по массиву ячеек
-        // for (let i in grid.nodes) {
-        //     // Записываем в локальную переменную текущий элемент массива
-        //     let enemy = grid.nodes[i];
-        //
-        //     // Прверяем было ли столкновение с ячейкой
-        //     if (isCollision(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2,
-        //         enemy.x, enemy.y, enemy.width, enemy.height)) {
-        //         if (this.dx === 1 && this.dy === -1) {
-        //             // Проходимся по всем точкам где был шарик до столкновения
-        //             for (let j = 0; j < this.speedX + 1; j++) {
-        //                 // Создаём локальные предыдущие координаты
-        //                 let prevX = this.x + this.radius - j;
-        //                 let prevY = this.y - this.radius + j;
-        //
-        //                 // Если столкнулись с левой границей
-        //                 if (prevX === enemy.x) {
-        //                     // Меняем направление по x
-        //                     this.dx *= -1;
-        //                     // Убираем ячейку с которой столкнулись
-        //                     grid.destroy(i);
-        //                     // Создаём запись об уничтожении ячейки
-        //                     let event = {name: 'block_destroyed', time: player.time};
-        //                     // Записываем в массив событий
-        //                     settings.eventHistory.push(event);
-        //                     // Увеличиваем счёт пользователя
-        //                     player.updScore(1);
-        //                     // Выходим из цикла
-        //                     return;
-        //                 }
-        //
-        //                 // Если толкнулись с нижней границей
-        //                 if (prevY === enemy.y + enemy.height) {
-        //                     // Меняем направление по y
-        //                     this.dy *= -1;
-        //                     // Убираем ячейку с которой столкнулись
-        //                     grid.destroy(i);
-        //                     // Создаём запись об уничтожении ячейки
-        //                     let event = {name: 'block_destroyed', time: player.time};
-        //                     // Записываем в массив событий
-        //                     settings.eventHistory.push(event);
-        //                     // Увеличиваем счёт пользователя
-        //                     player.updScore(1);
-        //                     // Выходим из цикла
-        //                     return;
-        //                 }
-        //             }
-        //             // Столкновение либо с нижней границей, либо с левой
-        //         }
-        //
-        //         if (this.dx === 1 && this.dx === 1) {
-        //             // Проходимся по всем точкам где был шарик до столкновения
-        //             for (let j = 0; j < this.speedX + 1; j++) {
-        //                 // Создаём локальные предыдущие координаты
-        //                 let prevX = this.x + this.radius - j;
-        //                 let prevY = this.y + this.radius - j;
-        //
-        //                 // Если столкнулись с левой границей
-        //                 if (prevX === enemy.x) {
-        //
-        //                     this.dx *= -1;
-        //
-        //                     grid.destroy(i);
-        //                     // Создаём запись об уничтожении ячейки
-        //                     let event = {name: 'block_destroyed', time: player.time};
-        //                     // Записываем в массив событий
-        //                     settings.eventHistory.push(event);
-        //
-        //                     player.updScore(1);
-        //
-        //                     return;
-        //                 }
-        //
-        //                 if (prevY === enemy.y) {
-        //                     // Столкнулись с нижней границей
-        //                     this.dy *= -1;
-        //
-        //                     grid.destroy(i);
-        //                     // Создаём запись об уничтожении ячейки
-        //                     let event = {name: 'block_destroyed', time: player.time};
-        //                     // Записываем в массив событий
-        //                     settings.eventHistory.push(event);
-        //
-        //                     player.updScore(1);
-        //
-        //                     return;
-        //                 }
-        //             }
-        //             // Столкновение либо с верхней границей, либо с левой
-        //         }
-        //
-        //         if (this.dx === -1 && this.dy === -1) {
-        //             // Проходимся по всем точкам где был шарик до столкновения
-        //             for (let j = 0; j < this.speedX + 1; j++) {
-        //                 let prevX = this.x - this.radius + j;
-        //                 let prevY = this.y - this.radius + j;
-        //
-        //                 if (prevX === enemy.x + enemy.width) {
-        //                     // Столкнулись с левой границей
-        //                     this.dx *= -1;
-        //
-        //                     grid.destroy(i);
-        //                     // Создаём запись об уничтожении ячейки
-        //                     let event = {name: 'block_destroyed', time: player.time};
-        //                     // Записываем в массив событий
-        //                     settings.eventHistory.push(event);
-        //
-        //                     player.updScore(1);
-        //
-        //                     return;
-        //                 }
-        //
-        //                 if (prevY === enemy.y + enemy.height) {
-        //                     // Столкнулись с нижней границей
-        //                     this.dy *= -1;
-        //
-        //                     grid.destroy(i);
-        //
-        //                     player.updScore(1);
-        //
-        //                     return;
-        //                 }
-        //             }
-        //             // Столкновение либо с нижней границей, либо с правой гранцей
-        //         }
-        //
-        //         if (this.dx === -1 && this.dy === 1) {
-        //             // Проходимся по всем точкам где был шарик до столкновения
-        //             for (let j = 0; j < this.speedX + 1; j++) {
-        //                 let prevX = this.x - this.radius + j;
-        //                 let prevY = this.y + this.radius - j;
-        //
-        //                 if (prevY === enemy.y) {
-        //                     // Столкнулись с нижней границей
-        //                     this.dy *= -1;
-        //
-        //                     grid.destroy(i);
-        //
-        //                     player.updScore(1);
-        //
-        //                     return;
-        //                 }
-        //
-        //                 if (prevX === enemy.x + enemy.width) {
-        //                     // Столкнулись с левой границей
-        //                     this.dx *= -1;
-        //
-        //                     grid.destroy(i);
-        //
-        //                     player.updScore(1);
-        //
-        //                     return;
-        //                 }
-        //
-        //
-        //             }
-        //             // Столкновение либо с верхней границей, либо с правой гранцей
-        //         }
-        //     }
-        // }
+        for (let i in grid.nodes) {
+            // Записываем в локальную переменную текущий элемент массива
+            let enemy = grid.nodes[i];
+
+            // Прверяем было ли столкновение с ячейкой
+            if (isCollision(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2,
+                enemy.x, enemy.y, enemy.width, enemy.height)) {
+                if (this.dx === 1 && this.dy === -1) {
+                    // Движение вправо вверх
+                    this.collisionSetDirection(this.x + this.radius, enemy.x + 1, 'dx', i);
+
+                    this.collisionSetDirection(this.y - this.radius, enemy.y + enemy.height - 1, 'dy', i);
+                }
+
+                if (this.dx === 1 && this.dy === 1) {
+                    // Движение вправо вниз
+                    this.collisionSetDirection(this.x + this.radius, enemy.x + 1, 'dx', i);
+
+                    this.collisionSetDirection(this.y + this.radius, enemy.y + 1, 'dy', i);
+                }
+
+                if (this.dx === -1 && this.dy === -1) {
+                    // Движение влево вверх
+                    this.collisionSetDirection(this.x - this.radius, enemy.x + enemy.width - 1, 'dx', i);
+
+                    this.collisionSetDirection(this.y - this.radius, enemy.y + enemy.height - 1, 'dy', i);
+                }
+
+                if (this.dx === -1 && this.dy === 1) {
+                    // Движение влево вниз
+                    this.collisionSetDirection(this.x - this.radius, enemy.x + enemy.width - 1, 'dx', i);
+
+                    this.collisionSetDirection(this.y + this.radius, enemy.y + 1, 'dy', i);
+                }
+            }
+        }
 
         // Проверяем столкновение с картекой
         if (isCollision(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2,
@@ -241,6 +118,19 @@ let ball = {
             this.dy = -1;
             // Запускам мяч снова с положения середины каретки
             ball.init(player.x + Math.ceil(player.width / 2), player.y - 5, 5, 'blue');
+        }
+    },
+
+    collisionSetDirection(coord1, coord2, dir, cell) {
+        if (coord1 === coord2) {
+            if (dir === 'dx') {
+                this.dx *= -1;
+            } else {
+                this.dy *= -1;
+            }
+            grid.destroy(cell);
+
+            game.updScore();
         }
     },
 };
