@@ -218,10 +218,10 @@ let ball = {
         // }
 
         // Проверяем столкновение с картекой
-        // if (isCollision(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2,
-        //     player.x, player.y, player.width, player.height)) {
-        //     this.dy *= -1;
-        // }
+        if (isCollision(this.x - this.radius, this.y - this.radius, this.radius * 2, this.radius * 2,
+            player.x, player.y, player.width, player.height)) {
+            this.dy *= -1;
+        }
 
         // Если мяч столкнулся с вертикальными краями карты
         if (this.x + this.radius >= width || this.x - this.radius <= 0) {

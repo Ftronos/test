@@ -53,10 +53,57 @@ const game = {
         // Рисуем мяч
         this.ball.draw();
 
+        // Устанавливаем обработчики событий
+        this.setEventHandlers();
+
         // Запускаем игру
         if (this.startGame()) {
             // Создаём переменную которая будет запускать игру с периодом отрисовки в 1 секунду деленную на скорость мяча
             let gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
+        }
+    },
+
+    /**
+     * Ставит обработчики события.
+     */
+    setEventHandlers() {
+        // При нажатии кнопки, если статус игры "играем", то вызываем функцию смены направления у змейки.
+        document.addEventListener('keydown', event => this.keyDownHandler(event));
+    },
+
+    /**
+     * Обработчик события нажатия кнопки клавиатуры.
+     * @param {KeyboardEvent} event
+     */
+    keyDownHandler(event) {
+        // Если статус игры не "играем", значит обрабатывать ничего не нужно.
+        if (!this.condition.isPlaying()) {
+            return;
+        }
+        // Получаем направление каретки, больше мы не обрабатываем других нажатий.
+        this.player.dx = this.getDirectionByCode(event.code);
+
+        // Если каретка может сделать передвижение, то передвигаем
+        if (this.player.canMove()) {
+            player.move(1);
+        }
+    },
+
+    /**
+     * Отдает направление змейки в зависимости от переданного кода нажатой клавиши.
+     * @param {string} code Код нажатой клавиши.
+     * @returns {string} Направление змейки.
+     */
+    getDirectionByCode(code) {
+        switch (code) {
+            case 'KeyD':
+            case 'ArrowRight':
+                return 1;
+            case 'KeyA':
+            case 'ArrowLeft':
+                return -1;
+            default:
+                return 0;
         }
     },
 
@@ -74,7 +121,8 @@ const game = {
     },
 
     /**
-     * Отрисовывает перемещает, а также отрисовывает игрока, мяч
+     * Основная функция, отвечающая за 1 тик игры, где происходит передвижение элементов, проверка на их столкновение
+     * и отрисовка
      */
     gameTick() {
         // Проверяем будет ли столкновение на следующем шаге

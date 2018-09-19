@@ -27,10 +27,24 @@ const player = {
     },
 
     /**
+     * Проверяет возможно ли перемещение каретки
+     */
+    canMove() {
+        // Проверяем где окажется каретка в следующий момент времени
+        let nextPosition = this.x + this.dx;
+        // Если она окажется вне игровой области то шаг не может быть сделан
+        if (nextPosition + this.width > width || nextPosition < 0) {
+          return false;
+        }
+
+        return true;
+    },
+
+    /**
      * Передвигает каретку
      */
     move(distance) {
-        this.x += distance;
+        this.x += this.dx * distance * 0.01 * width;
     },
 
     /**

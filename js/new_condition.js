@@ -1,7 +1,7 @@
 "use strict";
 
 const condition = {
-    status: 'stoped',
+    status: 'stopped',
 
     /**
      * Устанавливает статус ыв "playing"
@@ -15,18 +15,18 @@ const condition = {
      * Устанавливает статус в "stopped".
      */
     setStopped() {
-        this.condition = 'stopped';
+        this.status = 'stopped';
     },
 
     /**
      * Устанавливает статус в "finished".
      */
     setFinished() {
-        this.condition = 'finished';
+        this.status = 'finished';
     },
 
     isPlaying() {
-        return this.condition === 'playing';
+        return this.status === 'playing';
     },
 
     /**
@@ -34,6 +34,6 @@ const condition = {
      * @returns {boolean} true, если статус "stopped", иначе false.
      */
     isStopped() {
-        return this.condition === 'stopped';
+        return this.status === 'stopped';
     },
 }
