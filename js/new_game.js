@@ -34,7 +34,6 @@ const game = {
         // Делаем первоначальную заливку
         fillAll('#cccccc');
 
-
         // Перемещаем каретку на начальное положение
         this.player.init((width - player.width) / 2, height - 10, this.player.width, 'blue');
 
@@ -54,8 +53,24 @@ const game = {
         // Рисуем мяч
         this.ball.draw();
 
-        // Создаём переменную которая будет запускать игру с периодом отрисовки в 1 секунду деленную на скорость мяча
-        let gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
+        // Запускаем игру
+        if (this.startGame()) {
+            // Создаём переменную которая будет запускать игру с периодом отрисовки в 1 секунду деленную на скорость мяча
+            let gameTickId = setInterval(this.gameTick, 1000 / (this.ball.speed * 60));
+        }
+    },
+
+    /**
+     * Запускает игру
+     */
+    startGame() {
+        while(true) {
+            let confirmation = +prompt('Введите 1 для начала игры');
+
+            if (confirmation === 1) {
+                return true;
+            }
+        }
     },
 
     /**
@@ -63,15 +78,18 @@ const game = {
      */
     gameTick() {
         // Проверяем будет ли столкновение на следующем шаге
-       // this.ball.collision();
+        ball.collision();
         // Передвигаем мяч
         ball.move();
 
         // Передвигаем каретку
-        player.move(1);
+        player.move(0);
 
         // Затираем всё поле
         fillAll('#cccccc');
+
+        // Отрисовываем сетку ячеек
+        grid.draw();
 
         // Отрисовываем мяч
         ball.draw();
