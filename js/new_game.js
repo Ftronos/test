@@ -36,7 +36,7 @@ const game = {
         this.setParametrs();
 
         // Делаем первоначальную заливку
-        fillAll('#cccccc');
+        fillAll('transparent');
 
         // Перемещаем каретку на начальное положение
         this.player.init((width - player.width) / 2, height - 10, this.player.width, 'blue');
@@ -70,8 +70,6 @@ const game = {
     setEventHandlers() {
         // При нажатии кнопки, если статус игры "играем", то вызываем функцию смены направления у змейки.
         document.addEventListener('keydown', event => this.keyDownHandler(event));
-        // При нажатии кнопки стоп поставить игру на паузу
-        document.querySelector('#playButton').addEventListener('click', () => this.playClickHandler());
     },
 
     /**
@@ -160,7 +158,7 @@ const game = {
         game.drawTime(game.time);
 
         // Затираем всё поле
-        fillAll('#cccccc');
+        fillAll('transparent');
 
         // Отрисовываем сетку ячеек
         grid.draw();
@@ -203,7 +201,7 @@ const game = {
      */
     setParametrs() {
         // Устанавливаем максимальное время
-        this.setMaxTime(600);
+        this.setMaxTime(60);
 
         // Устанавливаем счёт для победы
         this.setMaxCount(1000);

@@ -41,8 +41,11 @@ let init = function () {
  * @param color Цвет для заливки
  */
 let fillAll = function (color) {
-    ctx.fillStyle = color;
+    ctx.fillStyle = '#000000';
+
     // Заливаем элемент
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = color;
     ctx.fillRect(0, 0, width, height);
 };
 
@@ -59,8 +62,32 @@ let clearAll = function () {
  * @param color Цвет заливки
  */
 let drawRect = function (x, y, w, h, color) {
+    let grd = ctx.createLinearGradient(x,y,x,y + h);
+    grd.addColorStop(0,"#23bdff");
+    grd.addColorStop(1,"#023dff");
+
     // Задаём цвет для заливки
-    ctx.fillStyle = color;
+    ctx.fillStyle = grd;
+    // Рисуем прямоугольник
+    ctx.fillRect(x, y, w, h);
+};
+
+/**
+ * Рисует прямоугольник по переданным параметрам
+ * @param x Начальная точка по x
+ * @param y Начальная точка по y
+ * @param w Ширина
+ * @param h Высота
+ * @param color Цвет заливки
+ */
+let drawPlayerRect = function (x, y, w, h, color) {
+    let grd = ctx.createLinearGradient(x,y,x,y + h);
+    grd.addColorStop(0,"#777777");
+    grd.addColorStop(0.5,"#bbbbbb");
+    grd.addColorStop(1,"#111111");
+
+    // Задаём цвет для заливки
+    ctx.fillStyle = grd;
     // Рисуем прямоугольник
     ctx.fillRect(x, y, w, h);
 };
@@ -73,8 +100,11 @@ let drawRect = function (x, y, w, h, color) {
  * @param color Цвет заливки
  */
 let drawCircle = function (x, y, r, color) {
+    let grd = ctx.createLinearGradient(x - r,y - r,x + r,y + r);
+    grd.addColorStop(0,"#eeeeee");
+    grd.addColorStop(1,"#000000");
     // Задаём цвет для заливки
-    ctx.fillStyle = color;
+    ctx.fillStyle = grd;
     // Запускаем новый путь
     ctx.beginPath();
     // Рисуем окружность

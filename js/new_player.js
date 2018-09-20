@@ -23,7 +23,7 @@ const player = {
      * Отрисовывает каретку
      */
     draw() {
-        drawRect(this.x, this.y, this.width, this.height, this.color);
+        drawPlayerRect(this.x, this.y, this.width, this.height, this.color);
     },
 
     /**
